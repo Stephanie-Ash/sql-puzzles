@@ -52,10 +52,13 @@ WHERE actor_id = (
 );
 
 -- 'Academy Dinosaur' has been rented out, when is it due to be returned?
-SELECT r.return_date FROM rental r
+SELECT f.title, DATE_ADD(r.rental_date, INTERVAL f.rental_duration DAY) AS due_date
+FROM rental r
 INNER JOIN inventory i ON r.inventory_id=i.inventory_id
 INNER JOIN film f ON f.film_id=i.film_id
-WHERE f.title='Academy Dinosaur' ORDER BY r.return_date DESC LIMIT 1;
+WHERE f.title='Academy Dinosaur'
+AND r.return_date IS NULL
+AND r.rental_date IS NOT NULL;
 
 -- What is the average runtime of all films?
 SELECT AVG(length) FROM film;
@@ -88,7 +91,7 @@ INNER JOIN actor a ON fa.actor_id=a.actor_id
 WHERE a.first_name = 'Fred' AND a.last_name = 'Costner';
 
 -- How many distinct countries are there?
-SELECT COUNT(DISTINCT country) FROM country;
+SELECT DISTINCT (COUNT country) FROM country;
 
 -- List the name of every language in reverse-alphabetical order.
 SELECT `name` FROM `language` ORDER BY `name` DESC;
