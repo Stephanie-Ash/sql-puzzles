@@ -18,7 +18,7 @@ WHERE co.`name`='Spain';
 -- Using JOIN ... ON , list all the languages spoken in the Southeast Asia region
 SELECT DISTINCT cl.`Language` FROM countrylanguage cl
 INNER JOIN country c ON c.`Code`=cl.CountryCode
-WHERE Region='Southeast Asia';
+WHERE c.Region='Southeast Asia';
 
 -- Using a single query, list 25 cities around the world that start with the letter F
 SELECT * FROM city WHERE `Name` LIKE 'F%' LIMIT 25;
@@ -53,7 +53,8 @@ SELECT `Name`, `Code` from country WHERE HeadOfState='Elizabeth II';
 
 -- List the top ten countries with the smallest population-to-area ratio. Discard any countries with a ratio of 0
 SELECT `Name`, Population/SurfaceArea AS ratio FROM country
-WHERE population > 0 ORDER BY ratio ASC LIMIT 10;
+WHERE population / surfacearea ! = 0
+ORDER BY ratio ASC LIMIT 10;
 
 -- List every unique world language
 SELECT DISTINCT `Language` FROM countrylanguage;
